@@ -1,0 +1,103 @@
+{# index.html #}
+{% extends "base.html" %}
+{% block css%}
+{% endblock %}
+{% block js %}
+    <script>
+        setTimeout(function(){
+            window.location.reload();
+        }, 5000);
+    </script>
+{% endblock %}
+{% block content %}
+    <h1>Open BaconFuzzer Dashboard <img src="/static/bacon.png" class="match_txt_height"></h1>
+    {% if not is_running %}
+        <label>No jobs running</label>
+    {% endif %}
+    {% for job in job_data %}
+        <!-- JOB DATA BLOCK/CARD -->
+            {% set is_running = job.get("is_running") %}
+            <div class="card job_card">
+                <div class="card-body job-card-header-running-{{is_running|lower}}">
+                    <h3>Job {{job.get("job_id")}}: {{job.get("protocol")}}://{% for opt, value in job.get("protocol_config").items() %}{{value}}:
+                        {% endfor %}{{STATUS_ICON_MAP.get(job.get("status"))|safe}}
+                    </h3>
+                </div>
+                <div class="card-body job-card-info-running-{{is_running|lower}}">
+                    {% if job.get("num_crashes") > 0 %}
+                    <div class="float-end">
+                        <a href="crashes/{{job.get('job_id')}}" class="btn btn-success" role="button"><span class="align-middle"><i class="bi bi-download"></i> Download Latest  Crashes</span></a>
+                    </div>
+                    {% endif %}
+                    <dl class="row">
+                        <dt class="col-sm-3 job">Comments / Notes</dt>
+                        <dd class="col-sm-9 job"><div class="blockquote {{'text-info' if is_running}}">{{job.get("comment")}}</div></dd>
+                        
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9">{{'<div class="text-info"><i class="bi bi-person-walking"></i> Running</div>' |safe if is_running else '<i class="bi bi-slash-circle"></i> Not running' | safe}}</dd>
+
+                        {% if not job.get("is_running") %}
+                        <dt class="col-sm-3 text-center"><em>Exit Reason</em></dt>
+                        <dd class="col-sm-9"><em>{{job.get("exit_reason")}}</em></dd>
+                        {% endif %}
+                    
+                        <dt class="col-sm-3">Number of Messages Sent</dt>
+                        <dd class="col-sm-9">{{job.get("num_msgs_sent")}}</dd>
+                    
+                        <dt class="col-sm-3 text-truncate">Number of Crashes</dt>
+                        <dd class="col-sm-9">{{job.get("num_crashes")}}{% if job.get("num_crashes") > 0 %}<a class="link-underline link-underline-opacity-0 link-underline-opacity-0-hover" href="crashes/{{job.get('job_id')}}">  <i class="bi bi-download"></i> Download Latest Crashes</a> {%endif%}</dd>
+                    
+                        <dt class="col-sm-3">Protocol</dt>
+                        <dd class="col-sm-9">{{job.get("protocol")}}</dd>
+
+                        <dt class="col-sm-3">Validate</dt>
+                        <dd class="col-sm-9">
+                            {% if job.get("validate") %}
+                            <div class="text-success"><i class="bi bi-check-circle"></i> Validation Enabled</div>
+                            {% else %}
+                            <i class="bi bi-ban"></i> No Validation
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 {{'inactive' if job.get('is_running') else 'active' }}">Protocol Configuration</dt>
+                        <dd class="col-sm-9">
+                            <dl class="row">
+                                {% for opt, value in job.get("protocol_config").items() %}
+                                <dt class="col-sm-4">{{opt}}</dt>
+                                <dd class="col-sm-8">{{value}}</dd>
+                                {% endfor %}
+                            </dl>
+                        </dd>
+                </dl>
+
+                <button onclick="location.href='save?job_id={{job.get("job_id")}}'" type="button" class="btn btn-{{'outline-' if not is_running}}success">
+                    <i class="bi bi-floppy-fill"></i> Save config
+                </button>
+                {% if job.get("is_running") %}
+                    <button onclick="location.href='stop?job_id={{job.get("job_id")}}'" type="button" class="btn btn-{{'outline-' if not is_running}}danger">
+                        <i class="bi bi-stop-circle-fill"></i> Stop job
+                    </button>
+                {% else %}
+                    <button onclick="location.href='remove?job_id={{job.get("job_id")}}'" type="button" class="btn btn-{{'outline-' if not is_running}}warning">
+                        <i class="bi bi-trash-fill"></i> Remove job
+                    </button>
+                {% endif %}
+                </div>
+            </div>
+        <!-- END JOB DATA BLOCK/CARD -->
+    {% endfor %}
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            <button onclick="location.href='create_job'" type="button" class="btn btn-primary w-100"><i class="bi-plus-circle-dotted"
+                    style="font-size: 1.5rem"></i> Create job</button>
+            </div>
+            <div class="col">
+            <button onclick="location.href='upload_job'" type="button" class="btn btn-primary w-100"><i class="bi-upload"
+                    style="font-size: 1.5rem"></i> Upload job</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

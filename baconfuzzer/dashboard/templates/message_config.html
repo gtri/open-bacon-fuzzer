@@ -1,0 +1,33 @@
+{# message_config.html #}
+{% extends "base.html" %}
+
+{% block js %}
+<script language="javascript">
+    function checkboxSelection(value) {
+        checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++)
+            checkboxes[i].checked = value;
+    }
+</script>
+{% endblock %}
+{% block content %}
+
+{{create_text_crumbs(JOB_STAGES)}}
+
+    <button onclick="checkboxSelection(true)" class="btn btn-outline-info"><i class="bi bi-check2-circle"></i> Select all</button>
+    <button onclick="checkboxSelection(false)" class="btn btn-outline-info"><i class="bi bi-ban"></i> Select none</button>
+    <br><br>
+    <form action="/protocol_config" id="startForm" method="post">
+        <input type="hidden" name="comment" value="{{comment}}">
+        <input type="hidden" name="protocol" value="{{protocol_name}}">
+        <input type="hidden" name="io_interface" value="{{io_interface_name}}">
+        <input type="hidden" name="device" value="{{device_name}}">
+        <input type="hidden" name="validate" value="{{validate}}">
+        {% for msg_name, enabled in protocol.get_msg_names(io_interface_name).items() %}
+            <input type="checkbox" name="{{msg_name}}" class="form-check-input" {{'checked' if enabled else ''}}>
+            <label for="{{msg_name}}">{{msg_name}}</label><br>
+        {% endfor %}
+        <br>
+        <input type="submit" value="Next" class="btn btn-outline-primary">
+    </form>
+{% endblock %}

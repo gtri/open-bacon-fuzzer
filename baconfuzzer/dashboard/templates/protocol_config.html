@@ -1,0 +1,28 @@
+{# message_config.html #}
+{% extends "base.html" %}
+
+{% block js %}
+<script language="javascript">
+    function checkboxSelection(value) {
+        checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++)
+            checkboxes[i].checked = value;
+    }
+</script>
+{% endblock %}
+{% block content %}
+
+{{create_text_crumbs(JOB_STAGES)}}
+
+<form action="/start" id="startForm" method="post">
+    <input type="hidden" name="comment" value="{{comment}}">
+    <input type="hidden" name="_protocol" value="{{protocol_name}}">
+    <input type="hidden" name="_selected_msgs" value="{{','.join(selected_msgs)}}">
+    <input type="hidden" name="validate" value="{{validate}}">
+    <input type="hidden" name="io_interface" value="{{io_interface_name}}">
+    <input type="hidden" name="device" value="{{device_name}}">
+    {{io_config.to_html()|safe}}
+    <br>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-play-circle-fill"></i> Start</button>
+</form>
+{% endblock %}

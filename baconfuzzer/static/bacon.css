@@ -1,0 +1,138 @@
+:root {
+    --gt-gold: #B3A369;
+    --gt-navy: #003057;
+    --gt-white: #FFFFFF;
+    --gt-bold-blue: #3A5DAE;
+    --gt-diploma-yellow: #F9F6E5;
+}
+
+[data-bs-theme=dark] {
+    color-scheme: dark;
+    --bacon-top-nav-bg-color: var(--gt-navy);
+    --bacon-top-nav-fg-color: var(--gt-gold);
+    --bacon-top-nav-link-color: var(--gt-white);
+    --bacon-top-nav-link-hover: var(--gt-gold);
+    --bacon-top-nav-bg-color_hover: var(--gt-bold-blue);
+    --bacon-heading-color: var(--gt-gold);
+    --bacon-sub-heading-color: var(--gt-diploma-yellow);
+    --bacon-job-card-title-active: var(--gt-diploma-yellow);
+    --bacon-job-card-title-bg-active: var(--gt-gold);
+    --bacon-job-card-info-active: var(--gt-diploma-yellow);
+    --bacon-job-card-info-bg-active: var(--gt-navy);
+    --bacon-job-card-title-inactive: rgb(129, 120, 98);
+    --bacon-job-card-title-bg-inactive: transparent;
+    --bacon-job-card-info-inactive: rgb(129, 120, 98);
+    --bacon-job-card-info-bg-inactive: transparent;
+}
+
+[data-bs-theme=light] {
+    color-scheme: light;
+    --bacon-top-nav-bg-color: var(--gt-gold);
+    --bacon-top-nav-fg-color: var(--gt-white);
+    --bacon-top-nav-link-color: var(--gt-navy);
+    --bacon-top-nav-link-hover: var(--gt-gold);
+    --bacon-top-nav-bg-color_hover: var(--gt-diploma-yellow);
+    --bacon-heading-color: var(--gt-navy);
+    --bacon-sub-heading-color: var(--gt-bold-blue);
+    --bacon-job-card-title-active: var(--gt-gold);
+    --bacon-job-card-title-inactive: rgb(160, 154, 140);
+    --bacon-job-card-info-active: var(--gt-navy);
+    --bacon-job-card-info-inactive: rgb(129, 120, 98);
+    --bacon-job-card-title-active: var(--gt-diploma-yellow);
+    --bacon-job-card-title-bg-active: var(--gt-navy);
+    --bacon-job-card-info-active: var(--gt-navy);
+    --bacon-job-card-info-bg-active: var(--gt-diploma-yellow);
+    --bacon-job-card-title-inactive: rgb(129, 120, 98);
+    --bacon-job-card-title-bg-inactive: transparent;
+    --bacon-job-card-info-inactive: rgb(129, 120, 98);
+    --bacon-job-card-info-bg-inactive: transparent;
+}
+
+#content-wrapper {
+    display: flexbox;
+}
+
+#content {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 5em;
+    margin-right: 5em;
+}
+
+.match_txt_height {
+    height: 1em;
+}
+
+h1 {
+    color: var(--bacon-heading-color);
+}
+
+h2,
+h3,
+h4,
+h5 {
+    color: var(--bacon-sub-heading-color);
+}
+
+#footer {
+    text-align: center;
+    align-items: center;
+}
+
+#top_nav_tabs {
+    background-color: var(--bacon-top-nav-bg-color);
+    color: var(--bacon-top-nav-fg-color);
+}
+
+.nav-link {
+    color: var(--bacon-top-nav-link-color);
+}
+
+.nav-link:hover {
+    color: var(--bacon-top-nav-link-hover);
+    background-color: var(--bacon-top-nav-bg-color_hover);
+}
+
+.job_card {
+    margin: 10px;
+}
+
+.job-card-header-running-false {
+    background-color: var(--bacon-job-card-title-bg-inactive);
+}
+
+.job-card-header-running-true {
+    background-color: var(--bacon-job-card-title-bg-active);
+}
+
+.job-card-info-running-false {
+    background-color: var(--bacon-job-card-info-bg-inactive);
+}
+
+.job-card-info-running-true {
+    background-color: var(--bacon-job-card-info-bg-active);
+}
+
+@scope (.job-card-header-running-false) {
+    h3 {
+        color: var(--bacon-job-card-title-inactive);
+    }
+}
+
+@scope (.job-card-info-running-false) {
+    dt {
+        color: var(--bacon-job-info-inactive);
+    }
+}
+
+@scope (.job-card-header-running-true) {
+    h3 {
+        color: var(--bacon-job-card-title-active);
+    }
+}
+
+@scope (.job-card-info-running-true) {
+    dt {
+        color: var(--bacon-job-info-active);
+    }
+}

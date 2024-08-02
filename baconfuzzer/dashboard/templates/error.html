@@ -1,0 +1,8 @@
+{# error.html #}
+{% extends "base.html" %}
+{% block content %}
+    <h1>Open BaconFuzzer Error {{status_code.value}}</h1>
+    <h2>{{status_code.value}} {{status_code.phrase}}</h2>
+    {{error_text}} <br>
+    {{details}}
+{% endblock %}

@@ -1,0 +1,74 @@
+{# create_job.html #}
+{% extends "base.html" %}
+{% block js %}
+<script type="text/javascript">
+    const messages_with_validation_logic = {{ messages_with_validation_logic | safe }};
+    function toggleValidateOption() {
+        selectElement = document.querySelector('#protocol');
+        protocol = selectElement.value.toLowerCase();
+
+        if (messages_with_validation_logic.includes(protocol)) {
+            // message type DOES implement validation logic
+            document.querySelector('#validate').disabled = false;
+            document.querySelector('#validate').checked = true;
+            document.querySelector('#validate_label').innerHTML = "Validate (slow)";
+        }
+        else {
+            // message type DOES NOT implement validation logic
+            document.querySelector('#validate').disabled = true;
+            document.querySelector('#validate').checked = false;
+            document.querySelector('#validate_label').innerHTML = `Validate (not available for ${protocol})`;
+        }
+    }
+</script>
+{% endblock %}
+{% block content %}
+
+{{create_text_crumbs(JOB_STAGES)}}
+
+<h1>Create a Fuzz Job</h1>
+<form action="/message_config" id="startForm" method="post">
+    <label for="comment" name="comment_label" id="comment_label">Comment (notes)</label><br>
+    <input type="text" class="form-control" name="comment" id="comment" placeholder="Comment">
+    <br>
+    <label for="protocol" id="lbl_protocol">
+        Protocol to Fuzz
+    </label>
+    <select onchange="toggleValidateOption()" name="protocol" id="protocol" form="startForm" class="form-select">
+        {% for p in prot_choices %}
+        <option value={{p}}>{{p}}</option>"
+        {% endfor %}
+    </select>
+    <br>
+
+    <label for="io_interface" id="lbl_io_interface">
+        IO interface
+    </label>
+    <select name="io_interface" id="io_interface" form="startForm" class="form-select">
+        {% for i in io_choices %}
+        <option value="{{i}}">{{i}}</option>"
+        {% endfor %}
+    </select>
+    <br>
+
+    <label for="device" id="lbl_device">
+        Device
+    </label>
+    <select name="device" id="device" form="startForm" class="form-select">
+        {% for i in device_choices %}
+        <option value="{{i}}">{{i}}</option>"
+        {% endfor %}
+    </select>
+    <br>
+
+    <input type="checkbox" name="validate" id="validate" class="form-check-input">
+    <label for="validate" name="validate_label" id="validate_label">Validate (slow)</label><br>
+    <br>
+    <input type="submit" enabled="false" value="Next" class="btn btn-outline-primary">
+</form>
+<script>
+    window.onload = function () {
+        toggleValidateOption();
+    };
+</script>
+{% endblock %}
