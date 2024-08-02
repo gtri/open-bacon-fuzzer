@@ -78,4 +78,6 @@ This work is licensed under the [BSD 3-Clause "New" or "Revised" License](LICENS
 
 Please refer to the [credits](CREDITS.md) file for credits.
 
+Original contributing authors: Matthew Pruett, Andrew Zeliff, Anjali Yagnavajhala, Hudson Howie, Jake Ashmore, Jestin Keaton, Justin Hsu, Patrick Ogle
+
 Copyright (c) 2024 Georgia Tech Applied Research Corporation and Contributors
